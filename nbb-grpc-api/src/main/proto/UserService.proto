@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.hp.grpc.api;
+
+option java_multiple_files = true;
+
+message UserDetailDTO {
+  string id = 1;
+}
+
+message UserDetailVO {
+  string id = 1;
+  string name = 2;
+}
+
+service UserService {
+  rpc getUserDetail (UserDetailDTO) returns (UserDetailVO);
+}

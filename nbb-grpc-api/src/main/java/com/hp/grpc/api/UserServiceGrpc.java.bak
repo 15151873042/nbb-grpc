@@ -1,0 +1,288 @@
+package com.hp.grpc.api;
+
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.protobuf.Descriptors.FileDescriptor;
+import io.grpc.BindableService;
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.MethodDescriptor;
+import io.grpc.MethodDescriptor.MethodType;
+import io.grpc.ServerServiceDefinition;
+import io.grpc.protobuf.ProtoFileDescriptorSupplier;
+import io.grpc.protobuf.ProtoServiceDescriptorSupplier;
+import com.google.protobuf.Descriptors.ServiceDescriptor;
+import io.grpc.protobuf.ProtoUtils;
+import io.grpc.stub.*;
+import io.grpc.stub.AbstractStub.StubFactory;
+import io.grpc.stub.ServerCalls.BidiStreamingMethod;
+import io.grpc.stub.ServerCalls.ClientStreamingMethod;
+import io.grpc.stub.ServerCalls.ServerStreamingMethod;
+import io.grpc.stub.ServerCalls.UnaryMethod;
+import io.grpc.stub.annotations.GrpcGenerated;
+import io.grpc.stub.annotations.RpcMethod;
+import io.grpc.protobuf.ProtoMethodDescriptorSupplier;
+
+import javax.annotation.Generated;
+
+import static io.grpc.MethodDescriptor.generateFullMethodName;
+
+/**
+ *
+ */
+@Generated(value = "by gRPC proto compiler (version 1.58.0)", comments = "Source: UserService.proto")
+@GrpcGenerated
+public final class UserServiceGrpc {
+
+    private UserServiceGrpc() {
+    }
+
+    public static final String SERVICE_NAME = "com.hp.grpc.api.UserService";
+
+    // Static method descriptors that strictly reflect the proto.
+    private static volatile MethodDescriptor<UserDetailDTO, UserDetailVO> getGetUserDetailMethod;
+
+    @RpcMethod(
+            fullMethodName = SERVICE_NAME + '/' + "getUserDetail",
+            requestType = UserDetailDTO.class,
+            responseType = UserDetailVO.class,
+            methodType = MethodType.UNARY)
+    public static MethodDescriptor<UserDetailDTO, UserDetailVO> getGetUserDetailMethod() {
+        MethodDescriptor<UserDetailDTO, UserDetailVO> getGetUserDetailMethod;
+        if ((getGetUserDetailMethod = UserServiceGrpc.getGetUserDetailMethod) == null) {
+            synchronized (UserServiceGrpc.class) {
+                if ((getGetUserDetailMethod = UserServiceGrpc.getGetUserDetailMethod) == null) {
+                    UserServiceGrpc.getGetUserDetailMethod = getGetUserDetailMethod =
+                            MethodDescriptor.<UserDetailDTO, UserDetailVO>newBuilder()
+                                    .setType(MethodType.UNARY)
+                                    .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getUserDetail"))
+                                    .setSampledToLocalTracing(true)
+                                    .setRequestMarshaller(ProtoUtils.marshaller(UserDetailDTO.getDefaultInstance()))
+                                    .setResponseMarshaller(ProtoUtils.marshaller(UserDetailVO.getDefaultInstance()))
+                                    .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("getUserDetail"))
+                                    .build();
+                }
+            }
+        }
+        return getGetUserDetailMethod;
+    }
+
+    /**
+     * Creates a new async stub that supports all call types for the service
+     */
+    public static UserServiceStub newStub(Channel channel) {
+        StubFactory<UserServiceStub> factory = new StubFactory<UserServiceStub>() {
+            @Override
+            public UserServiceStub newStub(Channel channel, CallOptions callOptions) {
+                return new UserServiceStub(channel, callOptions);
+            }
+        };
+        return UserServiceStub.newStub(factory, channel);
+    }
+
+    /**
+     * Creates a new blocking-style stub that supports unary and streaming output calls on the service
+     */
+    public static UserServiceBlockingStub newBlockingStub(Channel channel) {
+        StubFactory<UserServiceBlockingStub> factory = new StubFactory<UserServiceBlockingStub>() {
+            @Override
+            public UserServiceBlockingStub newStub(Channel channel, CallOptions callOptions) {
+                return new UserServiceBlockingStub(channel, callOptions);
+            }
+        };
+        return UserServiceBlockingStub.newStub(factory, channel);
+    }
+
+    /**
+     * Creates a new ListenableFuture-style stub that supports unary calls on the service
+     */
+    public static UserServiceFutureStub newFutureStub(Channel channel) {
+        StubFactory<UserServiceFutureStub> factory = new StubFactory<UserServiceFutureStub>() {
+            @Override
+            public UserServiceFutureStub newStub(Channel channel, CallOptions callOptions) {
+                return new UserServiceFutureStub(channel, callOptions);
+            }
+        };
+        return UserServiceFutureStub.newStub(factory, channel);
+    }
+
+    public interface AsyncService {
+
+        default void getUserDetail(UserDetailDTO request, StreamObserver<UserDetailVO> responseObserver) {
+            ServerCalls.asyncUnimplementedUnaryCall(getGetUserDetailMethod(), responseObserver);
+        }
+    }
+
+    /**
+     * Base class for the server implementation of the service UserService.
+     */
+    public static abstract class UserServiceImplBase implements BindableService, AsyncService {
+
+        @Override
+        public final ServerServiceDefinition bindService() {
+            return UserServiceGrpc.bindService(this);
+        }
+    }
+
+    /**
+     * A stub to allow clients to do asynchronous rpc calls to service UserService.
+     */
+    public static final class UserServiceStub extends AbstractAsyncStub<UserServiceStub> {
+        private UserServiceStub(Channel channel, CallOptions callOptions) {
+            super(channel, callOptions);
+        }
+
+        @Override
+        protected UserServiceStub build(Channel channel, CallOptions callOptions) {
+            return new UserServiceStub(channel, callOptions);
+        }
+
+        public void getUserDetail(UserDetailDTO request, StreamObserver<UserDetailVO> responseObserver) {
+            ClientCalls.asyncUnaryCall(getChannel().newCall(getGetUserDetailMethod(), getCallOptions()), request, responseObserver);
+        }
+    }
+
+    /**
+     * A stub to allow clients to do synchronous rpc calls to service UserService.
+     */
+    public static final class UserServiceBlockingStub extends AbstractBlockingStub<UserServiceBlockingStub> {
+        private UserServiceBlockingStub(Channel channel, CallOptions callOptions) {
+            super(channel, callOptions);
+        }
+
+        @Override
+        protected UserServiceBlockingStub build(Channel channel, CallOptions callOptions) {
+            return new UserServiceBlockingStub(channel, callOptions);
+        }
+
+        /**
+         *
+         */
+        public UserDetailVO getUserDetail(UserDetailDTO request) {
+            return ClientCalls.blockingUnaryCall(getChannel(), getGetUserDetailMethod(), getCallOptions(), request);
+        }
+    }
+
+    /**
+     * A stub to allow clients to do ListenableFuture-style rpc calls to service UserService.
+     */
+    public static final class UserServiceFutureStub extends AbstractFutureStub<UserServiceFutureStub> {
+        private UserServiceFutureStub(Channel channel, CallOptions callOptions) {
+            super(channel, callOptions);
+        }
+
+        @Override
+        protected UserServiceFutureStub build(Channel channel, CallOptions callOptions) {
+            return new UserServiceFutureStub(channel, callOptions);
+        }
+
+        /**
+         *
+         */
+        public ListenableFuture<UserDetailVO> getUserDetail(UserDetailDTO request) {
+            return ClientCalls.futureUnaryCall(
+                    getChannel().newCall(getGetUserDetailMethod(), getCallOptions()), request);
+        }
+    }
+
+    private static final int METHODID_GET_USER_DETAIL = 0;
+
+    private static final class MethodHandlers<Req, Resp> implements
+            UnaryMethod<Req, Resp>,
+            ServerStreamingMethod<Req, Resp>,
+            ClientStreamingMethod<Req, Resp>,
+            BidiStreamingMethod<Req, Resp> {
+
+        private final AsyncService serviceImpl;
+        private final int methodId;
+
+        MethodHandlers(AsyncService serviceImpl, int methodId) {
+            this.serviceImpl = serviceImpl;
+            this.methodId = methodId;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public void invoke(Req request, StreamObserver<Resp> responseObserver) {
+            switch (methodId) {
+                case METHODID_GET_USER_DETAIL:
+                    serviceImpl.getUserDetail((UserDetailDTO) request, (StreamObserver<UserDetailVO>) responseObserver);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public StreamObserver<Req> invoke(
+                StreamObserver<Resp> responseObserver) {
+            switch (methodId) {
+                default:
+                    throw new AssertionError();
+            }
+        }
+    }
+
+    public static final ServerServiceDefinition bindService(AsyncService service) {
+        return ServerServiceDefinition.builder(getServiceDescriptor())
+                .addMethod(
+                        getGetUserDetailMethod(),
+                        ServerCalls.asyncUnaryCall(
+                                new MethodHandlers<UserDetailDTO, UserDetailVO>(service, METHODID_GET_USER_DETAIL)
+                        )
+                )
+                .build();
+    }
+
+    private static abstract class UserServiceBaseDescriptorSupplier implements ProtoFileDescriptorSupplier, ProtoServiceDescriptorSupplier {
+        UserServiceBaseDescriptorSupplier() {
+        }
+
+        @Override
+        public FileDescriptor getFileDescriptor() {
+            return UserServiceOuterClass.getDescriptor();
+        }
+
+        @Override
+        public ServiceDescriptor getServiceDescriptor() {
+            return getFileDescriptor().findServiceByName("UserService");
+        }
+    }
+
+    private static final class UserServiceFileDescriptorSupplier extends UserServiceBaseDescriptorSupplier {
+        UserServiceFileDescriptorSupplier() {}
+    }
+
+    private static final class UserServiceMethodDescriptorSupplier
+            extends UserServiceBaseDescriptorSupplier
+            implements ProtoMethodDescriptorSupplier {
+        private final String methodName;
+
+        UserServiceMethodDescriptorSupplier(String methodName) {
+            this.methodName = methodName;
+        }
+
+        @Override
+        public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
+            return getServiceDescriptor().findMethodByName(methodName);
+        }
+    }
+
+    private static volatile io.grpc.ServiceDescriptor serviceDescriptor;
+
+    public static io.grpc.ServiceDescriptor getServiceDescriptor() {
+        io.grpc.ServiceDescriptor result = serviceDescriptor;
+        if (result == null) {
+            synchronized (UserServiceGrpc.class) {
+                result = serviceDescriptor;
+                if (result == null) {
+                    serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
+                            .setSchemaDescriptor(new UserServiceFileDescriptorSupplier())
+                            .addMethod(getGetUserDetailMethod())
+                            .build();
+                }
+            }
+        }
+        return result;
+    }
+}
