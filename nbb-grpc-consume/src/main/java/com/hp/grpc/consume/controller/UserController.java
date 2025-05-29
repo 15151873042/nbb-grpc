@@ -16,6 +16,7 @@ import java.util.Map;
  * @author 胡鹏
  */
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired

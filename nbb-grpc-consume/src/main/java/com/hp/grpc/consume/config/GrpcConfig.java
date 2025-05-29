@@ -1,5 +1,8 @@
 package com.hp.grpc.consume.config;
 
+import com.hp.grpc.api.ChatServiceGrpc;
+import com.hp.grpc.api.ChatServiceGrpc.ChatServiceBlockingStub;
+import com.hp.grpc.api.ChatServiceGrpc.ChatServiceStub;
 import com.hp.grpc.api.UserServiceGrpc;
 import com.hp.grpc.api.UserServiceGrpc.UserServiceBlockingStub;
 import io.grpc.ManagedChannel;
@@ -26,5 +29,11 @@ public class GrpcConfig {
         ManagedChannel managedChannel = this.managedChannel();
 
         return UserServiceGrpc.newBlockingStub(managedChannel);
+    }
+
+    @Bean
+    public ChatServiceStub chatService() {
+        ManagedChannel managedChannel = this.managedChannel();
+        return ChatServiceGrpc.newStub(managedChannel);
     }
 }
