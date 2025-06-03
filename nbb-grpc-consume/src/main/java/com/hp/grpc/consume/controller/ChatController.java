@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * @author 胡鹏
@@ -27,8 +25,6 @@ public class ChatController implements InitializingBean {
     private StreamObserver<ChatDTO> requestObserver;
     private StreamObserver<ChatVO> responseObserver;
 
-    private Executor executor = Executors.newSingleThreadExecutor();
-
 
     @RequestMapping("")
     public String chat(String message) {
@@ -37,14 +33,13 @@ public class ChatController implements InitializingBean {
                 .setMessage(message)
                 .build();
         requestObserver.onNext(dto);
-        return "a";
+        return "success";
     }
 
     @Override
     public void afterPropertiesSet() {
         this.responseObserver = this.newResponseObserverInstance();
         this.requestObserver = chatService.sendMessage(responseObserver);
-        System.out.println("abc");
     }
 
     private StreamObserver<ChatVO> newResponseObserverInstance() {
