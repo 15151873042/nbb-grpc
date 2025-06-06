@@ -13,5 +13,6 @@
         <module>nbb-grpc-provide</module>
         <module>nbb-grpc-consume</module>
         <module>nbb-grpc-server</module>
+        <module>nbb-grpc-client</module>
     </modules>
 </project>

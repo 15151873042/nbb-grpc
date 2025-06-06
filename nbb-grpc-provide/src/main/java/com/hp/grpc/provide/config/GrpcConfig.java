@@ -1,5 +1,6 @@
 package com.hp.grpc.provide.config;
 
+import com.hp.grpc.provide.interceptor.GrpcConnectionInterceptor;
 import com.hp.grpc.provide.rpc.ChatServiceImpl;
 import com.hp.grpc.provide.rpc.UserServiceImpl;
 import io.grpc.Server;
@@ -20,6 +21,8 @@ public class GrpcConfig {
     private UserServiceImpl userService;
     @Autowired
     private ChatServiceImpl chatService;
+    @Autowired
+    private GrpcConnectionInterceptor interceptor;
 
 
     @Bean
@@ -29,6 +32,7 @@ public class GrpcConfig {
                 .forPort(8888)
                 .addService(userService)
                 .addService(chatService)
+                .intercept(interceptor)
                 .build();
 
         server.start();

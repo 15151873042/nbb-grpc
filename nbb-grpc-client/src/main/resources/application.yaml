@@ -1,0 +1,10 @@
+server:
+  port: 8070
+logging:
+  file:
+    name: ${spring.application.name}
+    path: d:\logs\
+
+spring:
+  application:
+    name: nbb-grpc-client

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hp.grpc.api";
+
+message Payload {
+  string message = 1;
+}
+
+service Request {
+  // Sends a commonRequest
+  rpc request (Payload) returns (Payload) {
+  }
+}
+
+service BiRequestStream {
+  // Sends a biStreamRequest
+  rpc requestBiStream (stream Payload) returns (stream Payload) {
+  }
+}
