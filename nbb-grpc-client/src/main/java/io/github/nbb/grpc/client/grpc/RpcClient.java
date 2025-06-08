@@ -1,12 +1,18 @@
 package io.github.nbb.grpc.client.grpc;
 
+import com.hp.grpc.api.MessageDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.util.ServerInfo;
 import org.apache.coyote.http11.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
  * @author 胡鹏
  */
+@Slf4j
 public abstract class RpcClient {
 
     protected ScheduledExecutorService clientEventExecutor;
@@ -16,6 +22,13 @@ public abstract class RpcClient {
     protected RpcClientConfig rpcClientConfig = new RpcClientConfig();
 
     private long lastActiveTimeStamp = System.currentTimeMillis();
+
+    protected volatile Connection currentConnection;
+
+    /**
+     * 处理程序来处理服务器推送请求。
+     */
+    protected List<ServerRequestHandler> serverRequestHandlers = new ArrayList<>();
 
 
     public final void start() {
@@ -28,6 +41,28 @@ public abstract class RpcClient {
         });
 
 
+    }
+
+    /**
+     * 处理服务端发送的数据
+     * @param request
+     * @return
+     */
+    protected MessageDTO handleServerRequest(final MessageDTO request) {
+        lastActiveTimeStamp = System.currentTimeMillis();
+        for (ServerRequestHandler serverRequestHandler: serverRequestHandlers) {
+            try {
+                MessageDTO response = serverRequestHandler.requestReply(request, currentConnection);
+                if (response != null) {
+                    log.info("确认了服务端推送的信息");
+                    return response;
+                }
+            } catch (Exception e) {
+                log.error("处理服务端推送的信息出错了，错误信息为：{}", e.getMessage());
+                throw e;
+            }
+        }
+        return null;
     }
 
     /**

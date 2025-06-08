@@ -11,4 +11,9 @@ public class GrpcClusterServer extends BaseGrpcServer{
     public int rpcPortOffset() {
         return 1001;
     }
+
+    @Override
+    public void shutdownServer() {
+
+    }
 }

@@ -3,18 +3,19 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.hp.grpc.api";
 
-message Payload {
+message MessageDTO {
   string message = 1;
+  string requestId = 2;
 }
 
-service Request {
+service NormalService {
   // Sends a commonRequest
-  rpc request (Payload) returns (Payload) {
+  rpc send (MessageDTO) returns (MessageDTO) {
   }
 }
 
-service BiRequestStream {
+service StreamService {
   // Sends a biStreamRequest
-  rpc requestBiStream (stream Payload) returns (stream Payload) {
+  rpc send (stream MessageDTO) returns (stream MessageDTO) {
   }
 }

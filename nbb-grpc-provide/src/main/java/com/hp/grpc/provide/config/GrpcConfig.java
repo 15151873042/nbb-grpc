@@ -1,5 +1,6 @@
 package com.hp.grpc.provide.config;
 
+import com.hp.grpc.provide.filter.AddressTransportFilter;
 import com.hp.grpc.provide.interceptor.GrpcConnectionInterceptor;
 import com.hp.grpc.provide.rpc.ChatServiceImpl;
 import com.hp.grpc.provide.rpc.UserServiceImpl;
@@ -23,6 +24,8 @@ public class GrpcConfig {
     private ChatServiceImpl chatService;
     @Autowired
     private GrpcConnectionInterceptor interceptor;
+    @Autowired
+    private AddressTransportFilter addressTransportFilter;
 
 
     @Bean
@@ -33,6 +36,7 @@ public class GrpcConfig {
                 .addService(userService)
                 .addService(chatService)
                 .intercept(interceptor)
+                .addTransportFilter(addressTransportFilter)
                 .build();
 
         server.start();
