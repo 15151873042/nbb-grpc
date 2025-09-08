@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.nbb.grpc.api.stream;
+
+service StreamService {
+
+  // 1. 服务端流：客户端发1次请求，服务端返回多个响应
+  rpc serverStream(StreamDTO) returns (stream StreamVO);
+
+  // 2. 客户端流：客户端发多个请求，服务端返回1次响应
+  rpc clientStream(stream StreamDTO) returns (StreamVO);
+
+  // 3. 双向流：客户端和服务端互相发送多个消息
+  rpc bidirectionalStream(stream StreamDTO) returns (stream StreamVO);
+
+}
+
+// 消息体定义
+message StreamDTO {
+  string content = 1;  // 消息内容
+  int32 count = 2;     // 用于指定流的次数（如服务端流返回多少条消息）
+}
+
+message StreamVO {
+  string message = 1;  // 响应消息
+  int32 sequence = 2;  // 序列号（用于标识流中的消息顺序）
+}

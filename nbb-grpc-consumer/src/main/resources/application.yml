@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+
+grpc:
+  client:
+    provider-server:
+      address: static://10.243.111.80:9090 # 配置gRPC服务端地址
+      enable-keep-alive: true #  开启keepalive以保持连接
+      negotiation-type: PLAINTEXT # 明文传输

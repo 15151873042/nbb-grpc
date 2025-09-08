@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.nbb.grpc.api.serverPush;
+
+// 定义服务
+service ServerPushService {
+
+  // 定义rpc方法
+  // 双向流：客户端发送空请求（仅建立连接），双方进行双向通信
+  // 注意：即使请求无参数，也需要显式声明 stream EmptyRequest
+  rpc subscribePush(stream PushDTO) returns (stream PushVO);
+
+
+}
+
+// 1. 客户端请求消息（空消息，因为客户端无需发送数据）
+// 仅作为双向流的语法载体，实际不会携带业务数据
+message PushDTO {
+  // 无任何字段，表示客户端无需传入参数
+}
+
+// 2. 定义服务端响应消息（根据实际业务需求设计）
+message PushVO {
+  string message = 1;  // 响应消息
+}

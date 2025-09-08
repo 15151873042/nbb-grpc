@@ -1,0 +1,4 @@
+GET http://localhost:8081/hello?name=张三
+
+###
+GET http://localhost:8081/hello-again?name=李四
