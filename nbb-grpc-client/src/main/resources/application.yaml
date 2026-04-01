@@ -1,0 +1,9 @@
+server:
+  port: 8100
+
+grpc-server:
+  host: 127.0.0.1
+  port: 9100
+
+grpc-client:
+  client-id: ${server.port}

@@ -1,0 +1,38 @@
+// 指定 Protobuf 版本（必须写在第一行）
+syntax = "proto3";
+
+// 定义跨语言命名空间，决定 gRPC 方法全限定名前缀
+package com.nbb.grpc.serverapi;
+
+// 生成多个文件，而非一个大文件
+option java_multiple_files = true;
+// 定义生成的 Java 类的包名，决定代码存放路径（如何未设置，则取package com.nbb.grpc.serverapi的值）
+option java_package = "com.nbb.grpc.serverapi";
+
+
+
+// 定义服务接口（核心：包含 RPC 方法）
+service HelloService {
+  // 1. 简单 RPC：客户端发请求，服务端回响应
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+
+  // 2. 服务端流式 RPC：客户端发1个请求，服务端回多个响应
+  rpc SayHelloStreamServer (HelloRequest) returns (stream HelloResponse);
+
+  // 3. 客户端流式 RPC：客户端发多个请求，服务端回1个响应
+  rpc SayHelloStreamClient (stream HelloRequest) returns (HelloResponse);
+
+  // 4. 双向流式 RPC：客户端和服务端同时发流
+  rpc SayHelloStreamBidirectional (stream HelloRequest) returns (stream HelloResponse);
+}
+
+// 定义请求数据结构
+message HelloRequest {
+  string name = 1; // 字段编号：1、2、3... 必须唯一，序列化时用
+  int32 age = 2;
+}
+
+// 定义响应数据结构
+message HelloResponse {
+  string message = 1;
+}
